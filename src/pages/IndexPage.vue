@@ -1,49 +1,73 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page
+    padding
+    class="row items-center justify-evenly bg-grey-3 scroll-wrapper"
+  >
+    <q-scroll-area
+      :thumb-style="style.thumbStyle"
+      :bar-style="style.barStyle"
+      :style="{ height: '100%', width: '100%' }"
+    >
+      <q-list>
+        <address-item
+          v-for="item in addressList"
+          :key="item.id"
+          :address="item"
+        />
+      </q-list>
+    </q-scroll-area>
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
 import { defineComponent, ref } from 'vue';
+import uniqueId from 'lodash.uniqueid';
+import { Address } from 'src/components/models';
+import AddressItem from '../components/AddressItem.vue';
 
 export default defineComponent({
   name: 'IndexPage',
-  components: { ExampleComponent },
-  setup () {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
+  components: { AddressItem },
+  setup() {
+    const style = ref({
+      thumbStyle: {
+        right: '4px',
+        borderRadius: '5px',
+        backgroundColor: '#027be3',
+        width: '5px',
+        opacity: '0.75',
       },
-      {
-        id: 2,
-        content: 'ct2'
+
+      barStyle: {
+        right: '2px',
+        borderRadius: '9px',
+        backgroundColor: '#027be3',
+        width: '9px',
+        opacity: '0.2',
       },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200
     });
-    return { todos, meta };
-  }
+    let addressList: Address[] = [
+      {
+        id: uniqueId('address-'),
+        name: { first: 'John', last: 'Doe' },
+        email: 'johndoe@gmail.com',
+        phone: '+1 607 821 0404',
+      },
+      {
+        id: uniqueId('address-'),
+        name: { first: 'James', last: 'Brown' },
+        email: 'sunlighter0218@gmail.com',
+        phone: '+44 607 821 0404',
+      },
+    ];
+    return { style, addressList };
+  },
 });
 </script>
+
+<style scoped>
+.scroll-wrapper {
+  /* height: ;
+  width: 100vw; */
+}
+</style>

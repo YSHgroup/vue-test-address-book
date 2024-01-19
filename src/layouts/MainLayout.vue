@@ -1,31 +1,8 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="glossy" style="padding: 10px; color: white">
-      <q-toolbar>
-        <q-toolbar-title> Address Book </q-toolbar-title>
-        <!-- <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        /> -->
-        <q-input
-          color="white"
-          input-style="color: white"
-          label-color="white"
-          label="search"
-        >
-          <template v-slot:prepend>
-            <q-icon color="white" name="search" />
-          </template>
-        </q-input>
-        <q-btn flat dense round icon="group_add" />
-      </q-toolbar>
-    </q-header>
+    <header-component> </header-component>
 
-    <q-page-container>
+    <q-page-container class="book-container">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -33,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-// import EssentialLink from 'components/EssentialLink.vue';
+import HeaderComponent from 'components/Header.vue';
 
 const linksList = [
   {
@@ -84,7 +61,7 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    // EssentialLink,
+    HeaderComponent,
   },
 
   setup() {
@@ -100,3 +77,4 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped></style>

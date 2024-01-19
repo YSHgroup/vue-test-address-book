@@ -1,18 +1,24 @@
 // app global css in SCSS form
 :root {
-  display: grid;
-  background: $dark-page;
   body {
-    display: flex;
-    justify-self: center;
-    max-width: $mobile-width;
-    border-radius: 10px;
-    overflow: hidden;
-    background-color: white;
-    & header.fixed-top {
+    display: grid;
+    background: $dark-page;
+    #q-app {
+      display: flex;
+      justify-self: center;
       max-width: $mobile-width;
-      left: 50%;
-      transform: translateX(-50%);
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: white;
+      & header.fixed-top {
+        max-width: $mobile-width;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      & main {
+        width: $mobile-width;
+        height: calc(100vh - 76px);
+      }
     }
   }
 }
