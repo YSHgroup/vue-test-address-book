@@ -8,12 +8,16 @@
     </q-item-section>
     <q-item-section class="col-2 gt-sm" style="flex-grow: 1">
       <q-item-label class="q-mt-sm" lines="1">
-        {{ address.name.first + ' ' + address.name.last }}
+        {{ address ? address.name.first + ' ' + address.name.last : 'Unknown' }}
       </q-item-label>
     </q-item-section>
     <q-item-section style="flex-grow: 4">
-      <q-item-label caption> {{ address.email }} </q-item-label>
-      <q-item-label caption> {{ address.phone }} </q-item-label>
+      <q-item-label caption>
+        {{ address ? address.email : 'Unknown' }}
+      </q-item-label>
+      <q-item-label caption>
+        {{ address ? address.phone : 'Unknown' }}
+      </q-item-label>
     </q-item-section>
     <q-item-section side>
       <div class="text-blue-8 q-gutter-xs">

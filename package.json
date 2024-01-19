@@ -16,6 +16,7 @@
     "@quasar/extras": "^1.16.4",
     "@types/lodash.uniqueid": "^4.0.9",
     "lodash.uniqueid": "^4.0.1",
+    "pinia": "^2.1.7",
     "quasar": "^2.8.0",
     "vue": "^3.2.29",
     "vue-router": "^4.0.12"

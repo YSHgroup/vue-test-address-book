@@ -15,7 +15,7 @@
       </q-input>
       <q-btn flat dense round icon="group_add" @click="card = true" />
       <!-- {{ card }} -->
-      <address-modal v-model:card-state="card" @save-address="" />
+      <address-modal v-model:card-state="card" />
     </q-toolbar>
   </q-header>
 </template>
@@ -37,9 +37,9 @@ export default defineComponent({
   setup(props, { emit }) {
     const search = ref('');
     const card = ref(false);
-    const addAddress = (address: Address) => {
-      emit('');
-    };
+    // const addAddress = (address: Address) => {
+    //   emit('');
+    // };
     watch([card], (value) => {
       console.log('header card: ', value);
     });

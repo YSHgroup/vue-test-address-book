@@ -15,6 +15,8 @@
           :address="item"
         />
       </q-list>
+      {{ counter.count }}
+      <q-btn @click="counter.increment()" label="Increment" />
     </q-scroll-area>
   </q-page>
 </template>
@@ -22,6 +24,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import uniqueId from 'lodash.uniqueid';
+import { useCounterStore } from '../store/store';
 import { Address } from 'src/components/models';
 import AddressItem from '../components/AddressItem.vue';
 
@@ -29,6 +32,7 @@ export default defineComponent({
   name: 'IndexPage',
   components: { AddressItem },
   setup() {
+    const counter = useCounterStore();
     const style = ref({
       thumbStyle: {
         right: '4px',
@@ -60,7 +64,7 @@ export default defineComponent({
         phone: '+44 607 821 0404',
       },
     ];
-    return { style, addressList };
+    return { style, addressList, counter };
   },
 });
 </script>
