@@ -8,38 +8,29 @@
       :bar-style="style.barStyle"
       :style="{ height: '100%', width: '100%' }"
     >
-      <q-list>
+      <q-list v-if="addressList.length">
         <address-item
           v-for="item in addressList"
           :key="item.id"
           :address="item"
         />
       </q-list>
-      <q-btn @click="putData" class="q-mt-sm" label="PutExample" />
+      <banner-component v-else />
     </q-scroll-area>
   </q-page>
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  ref,
-  watch,
-  Ref,
-  onMounted,
-  onBeforeMount,
-  toRef,
-  reactive,
-} from 'vue';
+import { computed, defineComponent, ref, watch, onMounted } from 'vue';
 import uniqueId from 'lodash.uniqueid';
 import { useAddressStore } from '../store/store';
 import { Address } from 'src/models';
 import AddressItem from '../components/AddressItem.vue';
+import BannerComponent from '../components/Banner.vue';
 
 export default defineComponent({
   name: 'IndexPage',
-  components: { AddressItem },
+  components: { AddressItem, BannerComponent },
   setup() {
     const addressState = useAddressStore();
     const style = ref({
