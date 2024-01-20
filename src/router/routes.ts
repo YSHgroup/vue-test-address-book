@@ -4,7 +4,16 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [
+      {
+        path: '',
+        component: () => import('pages/IndexPage.vue'),
+        meta: { title: 'Address Book' },
+      },
+    ],
+    meta: {
+      title: 'Vue-Quasar-Pinia',
+    },
   },
 
   // Always leave this as last one,
