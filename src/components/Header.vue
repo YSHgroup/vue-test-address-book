@@ -7,7 +7,7 @@
         input-style="color: white"
         label-color="white"
         label="search"
-        v-model="search"
+        v-model.lazy.trim="search"
       >
         <template v-slot:prepend>
           <q-icon color="white" name="search" />
@@ -30,21 +30,20 @@ import {
   computed,
 } from 'vue';
 import AddressModal from './childcomponents/Modal.vue';
-import { Address } from './models';
+import { Address } from '../models';
+import { useAddressStore } from 'src/store/store';
 export default defineComponent({
   name: 'HeaderComponent',
   components: { AddressModal },
   setup(props, { emit }) {
     const search = ref('');
     const card = ref(false);
+    const addressStore = useAddressStore();
     // const addAddress = (address: Address) => {
     //   emit('');
     // };
-    watch([card], (value) => {
-      console.log('header card: ', value);
-    });
-    onUpdated(() => {
-      console.log('-updated-');
+    watch(search, (value) => {
+      addressStore.search(value);
     });
     return {
       card,

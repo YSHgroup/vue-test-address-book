@@ -13,8 +13,8 @@
 
 import { Quasar } from 'quasar';
 import { markRaw } from 'vue';
-import pinia from '../src/store/store';
 import RootComponent from 'app/src/App.vue';
+import pinia from '../src/store/store';
 
 import createRouter from 'app/src/router/index';
 

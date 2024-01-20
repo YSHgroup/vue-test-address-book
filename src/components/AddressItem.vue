@@ -50,7 +50,12 @@
             >
             <q-separator />
             <q-card-actions class="text-white" align="right">
-              <q-btn flat label="Yes" class="bg-warning" v-close-popup></q-btn>
+              <q-btn
+                flat
+                label="Yes"
+                class="bg-warning"
+                @click="deleteAddress"
+              ></q-btn>
               <q-btn flat label="Cancel" class="bg-primary" v-close-popup />
             </q-card-actions>
           </q-card>
@@ -62,8 +67,9 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useAddressStore } from 'src/store/store';
 import AddressModal from './childcomponents/Modal.vue';
-import type { Address } from './models';
+import type { Address } from '../models';
 export default defineComponent({
   name: 'AddressItem',
   components: { AddressModal },
@@ -72,10 +78,15 @@ export default defineComponent({
       type: Object as () => Address,
     },
   },
-  setup() {
+  setup(props) {
+    const addressStore = useAddressStore();
     const modal = ref(false);
-    // const
-    return { modal, confirm: ref(false) };
+    const confirm = ref(false);
+    const deleteAddress = async () => {
+      await addressStore.deleteData(props.address!.id);
+      confirm.value = false;
+    };
+    return { modal, confirm, deleteAddress };
   },
 });
 </script>

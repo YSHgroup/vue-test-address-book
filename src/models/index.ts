@@ -8,3 +8,8 @@ export interface Address {
 export interface Meta {
   totalCount: number;
 }
+
+export interface AddressState {
+  searchStr: string;
+  addressList: Address[];
+}

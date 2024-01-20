@@ -15,24 +15,33 @@
           :address="item"
         />
       </q-list>
-      {{ counter.count }}
-      <q-btn @click="counter.increment()" label="Increment" />
+      <q-btn @click="putData" class="q-mt-sm" label="PutExample" />
     </q-scroll-area>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import {
+  computed,
+  defineComponent,
+  ref,
+  watch,
+  Ref,
+  onMounted,
+  onBeforeMount,
+  toRef,
+  reactive,
+} from 'vue';
 import uniqueId from 'lodash.uniqueid';
-import { useCounterStore } from '../store/store';
-import { Address } from 'src/components/models';
+import { useAddressStore } from '../store/store';
+import { Address } from 'src/models';
 import AddressItem from '../components/AddressItem.vue';
 
 export default defineComponent({
   name: 'IndexPage',
   components: { AddressItem },
   setup() {
-    const counter = useCounterStore();
+    const addressState = useAddressStore();
     const style = ref({
       thumbStyle: {
         right: '4px',
@@ -50,28 +59,37 @@ export default defineComponent({
         opacity: '0.2',
       },
     });
-    let addressList: Address[] = [
-      {
+    let addressList = ref<Address[]>([]);
+    const putData = async () => {
+      const data = {
         id: uniqueId('address-'),
         name: { first: 'John', last: 'Doe' },
         email: 'johndoe@gmail.com',
         phone: '+1 607 821 0404',
-      },
-      {
-        id: uniqueId('address-'),
-        name: { first: 'James', last: 'Brown' },
-        email: 'sunlighter0218@gmail.com',
-        phone: '+44 607 821 0404',
-      },
-    ];
-    return { style, addressList, counter };
+      };
+      await addressState.addData(data);
+    };
+
+    onMounted(async () => {
+      await addressState.loadData();
+      const data = addressState.getData;
+      addressList.value = data;
+    });
+    const updatedAddressList = computed(() => addressState.getData);
+
+    watch(updatedAddressList, (val) => {
+      console.log('data watch: ', val, updatedAddressList.value);
+      addressList.value = val;
+    });
+
+    return {
+      style,
+      addressList,
+      addressState,
+      putData,
+    };
   },
 });
 </script>
 
-<style scoped>
-.scroll-wrapper {
-  /* height: ;
-  width: 100vw; */
-}
-</style>
+<style scoped></style>

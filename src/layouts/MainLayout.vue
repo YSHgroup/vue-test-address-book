@@ -3,7 +3,10 @@
     <header-component> </header-component>
 
     <q-page-container class="book-container">
+      <!-- <suspense> -->
       <router-view />
+      <!-- <template #fallback> Loading... </template> -->
+      <!-- </suspense> -->
     </q-page-container>
   </q-layout>
 </template>

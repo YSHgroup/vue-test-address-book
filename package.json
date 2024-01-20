@@ -15,6 +15,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.4",
     "@types/lodash.uniqueid": "^4.0.9",
+    "idb": "^8.0.0",
     "lodash.uniqueid": "^4.0.1",
     "pinia": "^2.1.7",
     "quasar": "^2.8.0",

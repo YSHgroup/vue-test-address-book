@@ -61,8 +61,9 @@
 
 <script lang="ts">
 import { defineComponent, ref, toRef, watch, Ref } from 'vue';
+import { useAddressStore } from 'src/store/store';
 import uniqueId from 'lodash.uniqueid';
-import { Address } from '../models';
+import { Address } from 'src/models';
 
 export default defineComponent({
   name: 'AddressModal',
@@ -70,23 +71,34 @@ export default defineComponent({
     cardState: { required: true, type: Boolean },
     addressInfo: { required: false, type: Object as () => Address },
   },
-  emits: ['update:cardState', 'save-address'],
+  emits: ['update:cardState'],
   setup(props, { emit }) {
+    const addressStore = useAddressStore();
     const internalCard = ref(false);
     let card = toRef(props, 'cardState');
+    const id = ref(props.addressInfo?.id);
     let firstName = ref(props.addressInfo ? props.addressInfo.name.first : '');
     let lastName = ref(props.addressInfo ? props.addressInfo.name.last : '');
     let email = ref(props.addressInfo ? props.addressInfo.email : '');
     let phone = ref(props.addressInfo ? props.addressInfo.phone : '');
 
-    const saveAddress = () => {
+    const saveAddress = async () => {
       const address: Address = {
         id: uniqueId('address-'),
         name: { first: firstName.value, last: lastName.value },
         email: email.value,
         phone: phone.value,
       };
-      emit('save-address', address);
+      // emit('save-address', address);
+      if (!!id.value) {
+        const addressId = id.value;
+        address.id = addressId;
+        await addressStore.updateData({ addressId, address });
+      } else {
+        await addressStore.addData(address);
+      }
+
+      emit('update:cardState', false);
     };
     watch(card, (card) => {
       internalCard.value = card;
