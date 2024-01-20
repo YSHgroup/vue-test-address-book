@@ -9,6 +9,7 @@ import {
   updateData as UpdataDataInDB,
 } from 'src/dbManagement';
 import type { AddressState } from 'src/models';
+import { isObject } from 'src/utils/functions';
 
 const pinia = createPinia();
 
@@ -63,29 +64,20 @@ export const useAddressStore = defineStore('address', () => {
       const data = await getDataFromDatabase();
       if (!data.length) throw new Error('No data in IndexedDB');
       state.addressList = [...data];
-      console.log('pinia data from indexedDB: ', state.addressList);
     } catch (error) {
       console.log(error);
-      state.addressList = [...dummy];
+      state.addressList = [];
     }
   }
   const getData = computed(() => {
     const data = state.addressList.filter((address) => {
-      console.log(
-        '---->',
-        Object.values(address)
-          .map((item) => (isObject(item) ? Object.values(item) : item))
-          .flat()
-          .join()
-          .includes('')
-      );
       return Object.values(address)
         .map((item) => (isObject(item) ? Object.values(item) : item))
         .flat()
+        .slice(1)
         .join()
         .includes(state.searchStr);
     });
-    console.log('seach--> ', data);
     return data;
   });
   return {
@@ -98,9 +90,5 @@ export const useAddressStore = defineStore('address', () => {
     getData,
   };
 });
-
-function isObject(value: any) {
-  return value && typeof value === 'object' && value.constructor === Object;
-}
 
 export default pinia;

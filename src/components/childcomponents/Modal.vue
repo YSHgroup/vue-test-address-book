@@ -89,7 +89,6 @@ export default defineComponent({
         email: email.value,
         phone: phone.value,
       };
-      // emit('save-address', address);
       if (!!id.value) {
         const addressId = id.value;
         address.id = addressId;

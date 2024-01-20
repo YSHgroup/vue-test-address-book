@@ -12,20 +12,16 @@
       background-color: white;
       & header.fixed-top {
         max-width: $mobile-width;
-        left: 50%;
-        transform: translateX(-50%);
+        margin: auto;
+      }
+      & header.border-top-sm {
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
       }
       & main {
-        width: $mobile-width;
+        max-width: $mobile-width;
         height: calc(100vh - 76px);
       }
     }
   }
 }
-// @at-root {
-//   @content: {
-//     &:has([style*="position: fixed"]) {
-//       max-width: 500px; /* Set your desired maximum width */
-//     }
-//   };
-// }

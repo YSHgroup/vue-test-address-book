@@ -48,7 +48,6 @@ export async function updateData(id: string, newData: any) {
     // Retrieve the existing data using the provided ID
     let existingData = await store.get(id);
 
-    console.log('exist data-->', existingData);
     // Modify the desired properties of the existing data
     existingData = newData;
 

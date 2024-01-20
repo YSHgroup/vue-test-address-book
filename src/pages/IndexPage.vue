@@ -78,7 +78,6 @@ export default defineComponent({
     const updatedAddressList = computed(() => addressState.getData);
 
     watch(updatedAddressList, (val) => {
-      console.log('data watch: ', val, updatedAddressList.value);
       addressList.value = val;
     });
 
