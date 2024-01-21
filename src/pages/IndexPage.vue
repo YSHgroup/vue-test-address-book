@@ -22,7 +22,6 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch, onMounted } from 'vue';
-import uniqueId from 'lodash.uniqueid';
 import { useAddressStore } from '../store/store';
 import { Address } from 'src/models';
 import AddressItem from '../components/AddressItem.vue';
@@ -51,15 +50,6 @@ export default defineComponent({
       },
     });
     let addressList = ref<Address[]>([]);
-    const putData = async () => {
-      const data = {
-        id: uniqueId('address-'),
-        name: { first: 'John', last: 'Doe' },
-        email: 'johndoe@gmail.com',
-        phone: '+1 607 821 0404',
-      };
-      await addressState.addData(data);
-    };
 
     onMounted(async () => {
       await addressState.loadData();
@@ -76,7 +66,6 @@ export default defineComponent({
       style,
       addressList,
       addressState,
-      putData,
     };
   },
 });

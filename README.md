@@ -51,7 +51,7 @@ To get the project up and running on your local machine, follow these steps:
 
    This will launch the project in development mode.
 
-## Testing the Project
+## Testing the Project(Unincluded)
 
 If tests are available and you wish to run them, execute the following command:
 
@@ -66,3 +66,11 @@ This command will run the test suite associated with the project (if implemented
 ---
 
 For further details or any issues encountered, refer to the project documentation or contact the project maintainer. Enjoy managing your contacts seamlessly with our Contact Management System!
+
+## **Reference**
+
+- [Vue3](https://vuejs.org/guide/introduction.html)
+- [Pinia](https://www.npmjs.com/package/pinia): version 2.1.7
+- [Quasar](https://quasar.dev/): version 2.8.0
+- [vue-router](https://router.vuejs.org/): Version 4.0.12
+- [IndexedDB](https://www.npmjs.com/package/idb)

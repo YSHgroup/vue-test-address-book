@@ -120,6 +120,7 @@ export default defineComponent({
       prompt: ref(false),
       nameRules: [
         (val: string) => (val && val.length > 0) || 'Please type Name',
+        (val: string) => (val && val.length >= 3) || 'Please enter 3 or more',
       ],
       saveAddress,
     };

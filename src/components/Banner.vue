@@ -21,7 +21,7 @@ export default defineComponent({
         id: uniqueId('address-'),
         name: { first: 'John', last: 'Doe' },
         email: 'johndoe@gmail.com',
-        phone: '+1 607 821 0404',
+        phone: '607 821 0404',
       };
       await addressStore.addData(data);
     };

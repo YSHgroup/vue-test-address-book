@@ -12,7 +12,7 @@ const routes: RouteRecordRaw[] = [
       },
     ],
     meta: {
-      title: 'Vue-Quasar-Pinia',
+      title: 'Contact Management System - Vue',
     },
   },
 
