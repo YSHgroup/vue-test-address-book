@@ -18,7 +18,9 @@
             dense
             v-model="firstName"
             label="First Name"
+            :rules="nameRules"
             autofocus
+            clearable
             @keyup.enter="prompt = false"
           />
           <q-input
@@ -27,6 +29,7 @@
             dense
             v-model="lastName"
             label="Last Name"
+            clearable
             @keyup.enter="prompt = false"
           />
         </div>
@@ -37,7 +40,7 @@
             dense
             v-model="email"
             label="E-mail"
-            autofocus
+            clearable
             @keyup.enter="prompt = false"
           />
           <q-input
@@ -46,6 +49,9 @@
             dense
             v-model="phone"
             label="Phone Number"
+            mask="(###) ### - ####"
+            fill-mask
+            clearable
             @keyup.enter="prompt = false"
           />
         </div>
@@ -112,6 +118,9 @@ export default defineComponent({
       email,
       phone,
       prompt: ref(false),
+      nameRules: [
+        (val: string) => (val && val.length > 0) || 'Please type Name',
+      ],
       saveAddress,
     };
   },
