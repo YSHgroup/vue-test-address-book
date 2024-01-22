@@ -1,4 +1,5 @@
 import { openDB } from 'idb';
+import { uniqueId } from 'src/utils/uniqueId';
 
 export async function openIndexedDB() {
   const db = await openDB('myAddressDB', 1, {
@@ -18,6 +19,9 @@ export async function addToDatabase(data: any) {
   const db = await openIndexedDB();
   const tx = db.transaction('addressStore', 'readwrite');
   const store = tx.objectStore('addressStore');
+  const preId =(await store.getAll()).map(item => item.id)
+  data.id = uniqueId( preId[preId.length-1] ,'address-');
+  console.log('stor-add: ', preId[preId.length-1], data.id);
   await store.add(data);
   await tx.done;
 }

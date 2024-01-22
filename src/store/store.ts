@@ -1,6 +1,5 @@
 import { reactive, computed } from 'vue';
 import { createPinia, defineStore } from 'pinia';
-import uniqueId from 'lodash.uniqueid';
 import {
   openIndexedDB,
   getDataFromDatabase,
@@ -12,21 +11,6 @@ import type { AddressState } from 'src/models';
 import { isObject } from 'src/utils/functions';
 
 const pinia = createPinia();
-
-const dummy = [
-  {
-    id: uniqueId('address-'),
-    name: { first: 'John', last: 'Doe' },
-    email: 'johndoe@gmail.com',
-    phone: '+1 607 821 0404',
-  },
-  {
-    id: uniqueId('address-'),
-    name: { first: 'James', last: 'Brown' },
-    email: 'sunlighter0218@gmail.com',
-    phone: '+44 607 821 0404',
-  },
-];
 
 export const useAddressStore = defineStore('address', () => {
   const state = reactive<AddressState>({
@@ -78,7 +62,7 @@ export const useAddressStore = defineStore('address', () => {
         .join()
         .includes(state.searchStr);
     });
-    return data;
+    return data.sort((pre, next)=> pre.name.first.localeCompare(next.name.first));
   });
   return {
     openDB,

@@ -89,8 +89,9 @@ export default defineComponent({
     let phone = ref(props.addressInfo ? props.addressInfo.phone : '');
 
     const saveAddress = async () => {
+      if(firstName.value.length <3) return
       const address: Address = {
-        id: uniqueId('address-'),
+        id: '',
         name: { first: firstName.value, last: lastName.value },
         email: email.value,
         phone: phone.value,
@@ -100,10 +101,15 @@ export default defineComponent({
         address.id = addressId;
         await addressStore.updateData({ addressId, address });
       } else {
+        console.log('second-log--', address.id)
         await addressStore.addData(address);
+        console.log('confirm')
       }
-
       emit('update:cardState', false);
+      firstName.value = ''
+      lastName.value = ''
+      email.value = ''
+      phone.value = ''
     };
     watch(card, (card) => {
       internalCard.value = card;
