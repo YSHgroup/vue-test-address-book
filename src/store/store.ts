@@ -58,11 +58,14 @@ export const useAddressStore = defineStore('address', () => {
       return Object.values(address)
         .map((item) => (isObject(item) ? Object.values(item) : item))
         .flat()
-        .slice(1)
-        .join()
-        .includes(state.searchStr);
+        .slice(1, 3)
+        .join(' ')
+        .toLowerCase()
+        .includes(state.searchStr.toLocaleLowerCase());
     });
-    return data.sort((pre, next)=> pre.name.first.localeCompare(next.name.first));
+    return data.sort((pre, next) =>
+      pre.name.first.localeCompare(next.name.first)
+    );
   });
   return {
     openDB,

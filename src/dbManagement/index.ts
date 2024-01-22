@@ -21,7 +21,6 @@ export async function addToDatabase(data: any) {
   const store = tx.objectStore('addressStore');
   const preId =(await store.getAll()).map(item => item.id)
   data.id = uniqueId( preId[preId.length-1] ,'address-');
-  console.log('stor-add: ', preId[preId.length-1], data.id);
   await store.add(data);
   await tx.done;
 }

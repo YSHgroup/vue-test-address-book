@@ -17,6 +17,7 @@
             style="width: 200px"
             dense
             v-model="firstName"
+            :readonly="!!addressInfo?.id"
             label="First Name"
             :rules="nameRules"
             autofocus
@@ -50,7 +51,6 @@
             v-model="phone"
             label="Phone Number"
             mask="(###) ### - ####"
-            fill-mask
             clearable
             @keyup.enter="prompt = false"
           />
@@ -68,7 +68,6 @@
 <script lang="ts">
 import { defineComponent, ref, toRef, watch, Ref } from 'vue';
 import { useAddressStore } from 'src/store/store';
-import uniqueId from 'lodash.uniqueid';
 import { Address } from 'src/models';
 
 export default defineComponent({
@@ -101,9 +100,7 @@ export default defineComponent({
         address.id = addressId;
         await addressStore.updateData({ addressId, address });
       } else {
-        console.log('second-log--', address.id)
         await addressStore.addData(address);
-        console.log('confirm')
       }
       emit('update:cardState', false);
       firstName.value = ''
@@ -127,6 +124,7 @@ export default defineComponent({
       nameRules: [
         (val: string) => (val && val.length > 0) || 'Please type Name',
         (val: string) => (val && val.length >= 3) || 'Please enter 3 or more',
+        (val: string) => (val && typeof val !== 'string') || 'String only',
       ],
       saveAddress,
     };
