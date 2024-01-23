@@ -67,7 +67,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, toRef, watch } from 'vue';
-import { useAddressStore } from 'src/store/store';
+import { useAddressStore } from '../../store/store';
 import { Address } from 'src/models';
 
 export default defineComponent({

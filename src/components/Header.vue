@@ -25,7 +25,7 @@
 <script lang="ts">
 import { ref, defineComponent, watch } from 'vue';
 import AddressModal from './childcomponents/Modal.vue';
-import { useAddressStore } from 'src/store/store';
+import { useAddressStore } from '../store/store';
 export default defineComponent({
   name: 'HeaderComponent',
   components: { AddressModal },

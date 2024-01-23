@@ -1,0 +1,46 @@
+import { mount } from '@vue/test-utils';
+import HeaderComponent from '../../src/components/Header.vue';
+import AddressModal from '../../src/components/childcomponents/Modal.vue';
+
+// Mocking the useAddressStore composable function
+// jest.mock('../../src/store/store', () => ({
+//   useAddressStore: jest.fn().mockReturnValue({
+//     search: jest.fn()
+//   })
+// }));
+
+describe('HeaderComponent', () => {
+  it('renders q-header and children components', () => {
+    const wrapper = mount(HeaderComponent, {
+      global: {
+        components: {
+          AddressModal: {
+            template: '<div/>',
+            props: ['cardState']
+          },
+        },
+      },
+    });
+
+    expect(wrapper.find('q-header').exists()).toBe(true);
+    expect(wrapper.findComponent(AddressModal).exists()).toBe(true);
+    expect(wrapper.findComponent({ name: 'q-toolbar' }).exists()).toBe(true);
+  });
+
+  it('binds search input correctly', async () => {
+    const wrapper = mount(HeaderComponent);
+
+    const inputElement = wrapper.find('input');
+    await inputElement.setValue('query');
+    expect(inputElement.element.value).toBe('query');
+    expect(wrapper.vm.search).toBe('query');
+  });
+
+  it('opens address modal on add button click', async () => {
+    const wrapper = mount(HeaderComponent);
+
+    const button = wrapper.find('button');
+    await button.trigger('click');
+    expect(wrapper.vm.card).toBe(true);
+  });
+});
