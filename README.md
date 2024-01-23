@@ -51,12 +51,12 @@ To get the project up and running on your local machine, follow these steps:
 
    This will launch the project in development mode.
 
-## Testing the Project(Unincluded)
+## Testing the Project
 
 If tests are available and you wish to run them, execute the following command:
 
 ```sh
-npm test
+npm run test:jest
 ```
 
 This command will run the test suite associated with the project (if implemented).

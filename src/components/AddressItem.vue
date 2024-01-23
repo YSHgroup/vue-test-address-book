@@ -3,10 +3,10 @@
     class="q-ma-sm bg-white shadow-1 rounded-borders cursor-pointer"
     style="border-radius: 16px"
   >
-    <q-item-section avatar>
+    <q-item-section avatar class="gt-xs">
       <q-avatar color="blue" text-color="white" icon="person" />
     </q-item-section>
-    <q-item-section class="col-2 gt-sm" style="flex-grow: 1">
+    <q-item-section class="col-2" style="flex-grow: 1">
       <q-item-label class="q-mt-sm" lines="1">
         {{ address ? address.name.first + ' ' + address.name.last : 'Unknown' }}
       </q-item-label>
@@ -22,7 +22,6 @@
     <q-item-section side>
       <div class="text-blue-8 q-gutter-xs">
         <q-btn
-          class="gt-xs"
           size="12px"
           flat
           dense
@@ -33,7 +32,6 @@
         <address-modal v-model:card-state="modal" :addressInfo="address" />
 
         <q-btn
-          class="gt-xs"
           size="12px"
           flat
           dense

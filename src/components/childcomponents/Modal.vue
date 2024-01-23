@@ -30,6 +30,7 @@
             dense
             v-model="lastName"
             label="Last Name"
+            :rules="nameRules"
             clearable
             @keyup.enter="prompt = false"
           />
@@ -41,6 +42,7 @@
             dense
             v-model="email"
             label="E-mail"
+            :rules="emailRules"
             clearable
             @keyup.enter="prompt = false"
           />
@@ -80,12 +82,13 @@ export default defineComponent({
   setup(props, { emit }) {
     const addressStore = useAddressStore();
     const internalCard = ref(false);
-    let card = toRef(props, 'cardState');
+    const card = toRef(props, 'cardState');
     const id = ref(props.addressInfo?.id);
-    let firstName = ref(props.addressInfo ? props.addressInfo.name.first : '');
-    let lastName = ref(props.addressInfo ? props.addressInfo.name.last : '');
-    let email = ref(props.addressInfo ? props.addressInfo.email : '');
-    let phone = ref(props.addressInfo ? props.addressInfo.phone : '');
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    const firstName = ref(props.addressInfo ? props.addressInfo.name.first : '');
+    const lastName = ref(props.addressInfo ? props.addressInfo.name.last : '');
+    const email = ref(props.addressInfo ? props.addressInfo.email : '');
+    const phone = ref(props.addressInfo ? props.addressInfo.phone : '');
 
     const saveAddress = async () => {
       if(firstName.value.length <3) return
@@ -125,6 +128,9 @@ export default defineComponent({
         (val: string) => (val && val.length > 0) || 'Please type Name',
         (val: string) => (val && val.length >= 3) || 'Please enter 3 or more',
         (val: string) => (val && /^[a-z]+$/gi.test(val)) || 'String only',
+      ],
+      emailRules: [
+      (val: string) => (val && emailPattern.test(val)) || 'Invalid email format',
       ],
       saveAddress,
     };
