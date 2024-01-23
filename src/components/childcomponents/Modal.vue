@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRef, watch, Ref } from 'vue';
+import { defineComponent, ref, toRef, watch } from 'vue';
 import { useAddressStore } from 'src/store/store';
 import { Address } from 'src/models';
 
@@ -124,7 +124,7 @@ export default defineComponent({
       nameRules: [
         (val: string) => (val && val.length > 0) || 'Please type Name',
         (val: string) => (val && val.length >= 3) || 'Please enter 3 or more',
-        (val: string) => (val && typeof val !== 'string') || 'String only',
+        (val: string) => (val && /^[a-z]+$/gi.test(val)) || 'String only',
       ],
       saveAddress,
     };

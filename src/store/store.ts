@@ -7,7 +7,7 @@ import {
   deleteDataFromDatabase,
   updateData as UpdataDataInDB,
 } from 'src/dbManagement';
-import type { AddressState } from 'src/models';
+import type { Address, AddressState } from 'src/models';
 import { isObject } from 'src/utils/functions';
 
 const pinia = createPinia();
@@ -24,7 +24,7 @@ export const useAddressStore = defineStore('address', () => {
   async function openDB() {
     await openIndexedDB();
   }
-  async function addData(data: any) {
+  async function addData(data: Address) {
     await addToDatabase(data);
     await loadData();
   }
@@ -33,7 +33,7 @@ export const useAddressStore = defineStore('address', () => {
     address,
   }: {
     addressId: string;
-    address: any;
+    address: Address;
   }) {
     await UpdataDataInDB(addressId, address);
     await loadData();

@@ -1,5 +1,6 @@
 import { openDB } from 'idb';
 import { uniqueId } from 'src/utils/uniqueId';
+import { Address } from 'src/models';
 
 export async function openIndexedDB() {
   const db = await openDB('myAddressDB', 1, {
@@ -15,7 +16,7 @@ export async function openIndexedDB() {
   return db;
 }
 
-export async function addToDatabase(data: any) {
+export async function addToDatabase(data: Address) {
   const db = await openIndexedDB();
   const tx = db.transaction('addressStore', 'readwrite');
   const store = tx.objectStore('addressStore');
@@ -42,7 +43,7 @@ export async function deleteDataFromDatabase(id: string) {
   await tx.done;
 }
 
-export async function updateData(id: string, newData: any) {
+export async function updateData(id: string, newData: Address) {
   try {
     const db = await openIndexedDB();
     const tx = db.transaction('addressStore', 'readwrite');

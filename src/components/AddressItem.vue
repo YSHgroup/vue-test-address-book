@@ -75,6 +75,7 @@ export default defineComponent({
   components: { AddressModal },
   props: {
     address: {
+      required: true,
       type: Object as () => Address,
     },
   },
@@ -83,7 +84,7 @@ export default defineComponent({
     const modal = ref(false);
     const confirm = ref(false);
     const deleteAddress = async () => {
-      await addressStore.deleteData(props.address!.id);
+      await addressStore.deleteData(props.address.id);
       confirm.value = false;
     };
     return { modal, confirm, deleteAddress };
