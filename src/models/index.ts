@@ -13,3 +13,10 @@ export interface AddressState {
   searchStr: string;
   addressList: Address[];
 }
+
+export interface ParamsType {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+}

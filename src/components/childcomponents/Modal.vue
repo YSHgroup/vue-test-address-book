@@ -53,6 +53,7 @@
             v-model="phone"
             label="Phone Number"
             mask="(###) ### - ####"
+            :rules="phoneRules"
             clearable
             @keyup.enter="prompt = false"
           />
@@ -71,6 +72,8 @@
 import { defineComponent, ref, toRef, watch } from 'vue';
 import { useAddressStore } from '../../store/store';
 import { Address } from 'src/models';
+import { isValidated } from 'src/utils/functions';
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'AddressModal',
@@ -84,17 +87,39 @@ export default defineComponent({
     const internalCard = ref(false);
     const card = toRef(props, 'cardState');
     const id = ref(props.addressInfo?.id);
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    const firstName = ref(props.addressInfo ? props.addressInfo.name.first : '');
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const firstName = ref(
+      props.addressInfo ? props.addressInfo.name.first : ''
+    );
     const lastName = ref(props.addressInfo ? props.addressInfo.name.last : '');
     const email = ref(props.addressInfo ? props.addressInfo.email : '');
     const phone = ref(props.addressInfo ? props.addressInfo.phone : '');
+    const $q = useQuasar();
+    
+    const triggerNegative = () => {
+      $q.notify({
+        type: 'negative',
+        position: 'top',
+        message: 'Please check all details for validation purposes.',
+      });
+    };
 
     const saveAddress = async () => {
-      if(firstName.value.length <3) return
+      if (
+        !isValidated({
+          firstName: firstName.value,
+          lastName: lastName.value,
+          email: email.value,
+          phone: phone.value,
+        })
+      ) {
+        return triggerNegative();
+      }
+      const first = firstName.value[0].toUpperCase().concat(firstName.value.slice(1))
+      const last = lastName.value[0].toUpperCase().concat(lastName.value.slice(1))
       const address: Address = {
         id: '',
-        name: { first: firstName.value, last: lastName.value },
+        name: { first, last },
         email: email.value,
         phone: phone.value,
       };
@@ -106,15 +131,15 @@ export default defineComponent({
         await addressStore.addData(address);
       }
       emit('update:cardState', false);
-      firstName.value = ''
-      lastName.value = ''
-      email.value = ''
-      phone.value = ''
     };
     watch(card, (card) => {
       internalCard.value = card;
     });
     watch(internalCard, (newValue: boolean) => {
+      firstName.value = props.addressInfo ? props.addressInfo.name.first : '';
+      lastName.value = props.addressInfo ? props.addressInfo.name.last : '';
+      email.value = props.addressInfo ? props.addressInfo.email : '';
+      phone.value = props.addressInfo ? props.addressInfo.phone : '';
       emit('update:cardState', newValue);
     });
     return {
@@ -124,13 +149,18 @@ export default defineComponent({
       email,
       phone,
       prompt: ref(false),
+      emailPattern,
       nameRules: [
         (val: string) => (val && val.length > 0) || 'Please type Name',
         (val: string) => (val && val.length >= 3) || 'Please enter 3 or more',
         (val: string) => (val && /^[a-z]+$/gi.test(val)) || 'String only',
       ],
       emailRules: [
-      (val: string) => (val && emailPattern.test(val)) || 'Invalid email format',
+        (val: string) =>
+          (val && emailPattern.test(val)) || 'Invalid email format',
+      ],
+      phoneRules: [
+        () => (phone.value.replace(/[-()\s]/g,'').length>=10) || 'Invalid phone number format'
       ],
       saveAddress,
     };

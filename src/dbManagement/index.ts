@@ -55,14 +55,12 @@ export async function updateData(id: string, newData: Address) {
     // Modify the desired properties of the existing data
     existingData = newData;
 
-    console.log('changed data-->', existingData);
     // Update the modified data in the object store
     await store.put(existingData);
 
     // Complete the transaction
     await tx.done;
 
-    console.log('Data updated successfully');
   } catch (error) {
     console.error('Error updating data:', error);
   }

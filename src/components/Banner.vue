@@ -19,9 +19,9 @@ export default defineComponent({
     const putData = async () => {
       const data = {
         id: uniqueId('address-'),
-        name: { first: 'John', last: 'Doe' },
-        email: 'johndoe@gmail.com',
-        phone: '607 821 0404',
+        name: { first: 'John', last: 'Steele' },
+        email: 'sunlighter2218@gmail.com',
+        phone: '484 602 2716',
       };
       await addressStore.addData(data);
     };

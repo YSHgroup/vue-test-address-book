@@ -67,6 +67,7 @@ export const useAddressStore = defineStore('address', () => {
       pre.name.first.localeCompare(next.name.first)
     );
   });
+  const getSearchStr = computed(() => state.searchStr)
   return {
     openDB,
     addData,
@@ -75,6 +76,7 @@ export const useAddressStore = defineStore('address', () => {
     updateData,
     search,
     getData,
+    getSearchStr
   };
 });
 

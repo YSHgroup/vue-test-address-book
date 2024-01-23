@@ -15,7 +15,8 @@
           :address="item"
         />
       </q-list>
-      <banner-component v-else />
+      <banner-component v-else-if="addressState.getSearchStr.length === 0" />
+      <h4 v-else class="text-center">Nothing matched</h4>
     </q-scroll-area>
   </q-page>
 </template>
